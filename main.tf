@@ -3,8 +3,9 @@ provider "aws" {
 }
 
 resource "aws_instance" "test" {
-  ami = "ami-0022f774911c1d690"
+  ami = "ami-09d56f8956ab235b3"
   instance_type = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.instance.id]
   user_data = <<-EOF
               #!/bin/bash
               echo "Hello, World" > index.html
@@ -13,9 +14,9 @@ resource "aws_instance" "test" {
    tags = {
      Name = "my-ec2-instance"
    }
+}
 resource "aws_security_group" "instance" {
   name = "terrafom-example-instance"
-  
 
   ingress {
     from_port    = 8080
